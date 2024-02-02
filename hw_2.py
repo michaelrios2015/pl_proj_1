@@ -3,25 +3,25 @@ import json
 
 
 def diameter(circ):
-    return circ / 3.14
+    return int(circ / 3.14)
 
 
 def circumfernce(diam):
-    return diam * 3.14
+    return int(diam * 3.14)
 
 
-def years():
-    print("Hello from a function")
-    # P = (au ** 3) ** .5
+def years(au):
+    # print("Hello from a function")
+    return round((au**3) ** 0.5, 2)
 
 
-def distance():
-    print("Hello from a function")
-    # au = (P ** 2) ** (1. /3.)
+def distance(P):
+    # print("Hello from a function")
+    return round((P**2) ** (1.0 / 3.0), 2)
 
 
-def volume():
-    print("Hello from a function")
+def volume(r):
+    return 1.333 * 3.14 * (r**3)
 
 
 def diam_circ(body, tabs):
@@ -47,12 +47,10 @@ def year_dist(body, tabs):
         tabs = "\t" * tabs
 
     if "DistanceFromSun" not in body:
-        body["DistanceFromSun"] = 2
-        # circumfernce(body["Diameter"])
+        body["DistanceFromSun"] = distance(body["OrbitalPeriod"])
 
     if "OrbitalPeriod" not in body:
-        body["OrbitalPeriod"] = 2
-        # diameter(body["Circumference"])
+        body["OrbitalPeriod"] = years(body["DistanceFromSun"])
 
     print(tabs + "Distance From Sun: " + str(body["DistanceFromSun"]))
     print(tabs + "Orbital Period: " + str(body["OrbitalPeriod"]))
@@ -64,36 +62,39 @@ jsonString = '{"Name": "Sol", "Diameter": 1400000, "Planets": [{"Name": "Mecury"
 # Convert JSON String to Python
 solar = json.loads(jsonString)
 
-# Print Dictionary
-# print(solar)
+# volumes
+sun_vol = 0
+planets_vol = 0
 
 # Print values using keys
 print(solar["Name"])
 
-# this should be it's own function
-# if "Diameter" in solar and "Circumference" in solar:
-#   print(solar["Diameter"])
-#   print(solar["Circumference"])
-
-# elif "Diameter" in solar:
-#   print(solar["Diameter"])
-#   print(circumfernce(solar["Diameter"]))
-# else:
-#   print(diameter(solar["Circumference"]))
-#   print(solar["Circumference"])
 diam_circ(solar, 1)
+sun_vol = volume(solar["Diameter"] / 2)
+
 print("\n\t" + "Planets\n")
 for planet in solar["Planets"]:
     print("\t" + planet["Name"])
 
     diam_circ(planet, 2)
-
     year_dist(planet, 2)
+    # print("\n")
+    planets_vol += volume(planet["Diameter"] / 2)
 
     if "Moons" in planet and len(planet["Moons"]) > 0:
         print("\n\t\t" + "Moon(s)\n")
         for moon in planet["Moons"]:
             print("\t" + "\t" + moon["Name"])
             diam_circ(moon, 3)
-# print(solar["Planets"][3]["Moons"])
-# print(solar)
+            # print("\n")
+
+
+if sun_vol > planets_vol:
+    print("The sun is bigger than the planets")
+elif sun_vol < planets_vol:
+    print("The planets are bigger than the sun")
+else:
+    print("The planets and sun are of equal volume")
+
+print(sun_vol)
+print(planets_vol)
