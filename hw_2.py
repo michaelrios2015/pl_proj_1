@@ -2,28 +2,37 @@
 import json
 
 
+# pi is being approxiamted as 3.14, it's fine for these calculation
+# calculates diameter from circumference
 def diameter(circ):
     return int(circ / 3.14)
 
 
+# calculates circumference from diameter
 def circumfernce(diam):
     return int(diam * 3.14)
 
 
+# calulates orbital period from planets distance from sun (au)
 def years(au):
     # print("Hello from a function")
     return round((au**3) ** 0.5, 2)
 
 
+# calculates planet's distance from sun given it's orbital period
 def distance(P):
     # print("Hello from a function")
     return round((P**2) ** (1.0 / 3.0), 2)
 
 
+# volume of a shpere
 def volume(r):
     return 1.333 * 3.14 * (r**3)
 
 
+# checks if circumference or diameter is missing
+# calculates missing value, puts it into the dict
+# prints results
 def diam_circ(body, tabs):
     if tabs == 0:
         tabs = ""
@@ -40,6 +49,9 @@ def diam_circ(body, tabs):
     print(tabs + "Circumference: " + str(body["Circumference"]))
 
 
+# checks if oribital period or distance from sun is missing
+# calculates missing value, puts it into the dict
+# prints results
 def year_dist(body, tabs):
     if tabs == 0:
         tabs = ""
@@ -69,26 +81,36 @@ planets_vol = 0
 # Print values using keys
 print(solar["Name"])
 
+# check for missing diameter or circumference
 diam_circ(solar, 1)
+# calculate volume
 sun_vol = volume(solar["Diameter"] / 2)
 
 print("\n\t" + "Planets\n")
+
+# iterate through planets
 for planet in solar["Planets"]:
     print("\t" + planet["Name"])
 
+    # check for missing values
     diam_circ(planet, 2)
     year_dist(planet, 2)
-    # print("\n")
+
+    # Calculate planest volume and add it to total volume of planets
     planets_vol += volume(planet["Diameter"] / 2)
 
+    # check to see if moons exisit
     if "Moons" in planet and len(planet["Moons"]) > 0:
         print("\n\t\t" + "Moon(s)\n")
+        # if so iterate through them
         for moon in planet["Moons"]:
             print("\t" + "\t" + moon["Name"])
+            # check for missing values
             diam_circ(moon, 3)
             # print("\n")
 
 
+# see if sun or planets volumes are bigger
 if sun_vol > planets_vol:
     print("The sun is bigger than the planets")
 elif sun_vol < planets_vol:
@@ -96,5 +118,5 @@ elif sun_vol < planets_vol:
 else:
     print("The planets and sun are of equal volume")
 
-print(sun_vol)
-print(planets_vol)
+# print(sun_vol)
+# print(planets_vol)

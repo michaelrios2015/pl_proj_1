@@ -1,4 +1,4 @@
-{
+  {
   "Name": "Sol",
   "Diameter": 1400000,
   "Planets": [
