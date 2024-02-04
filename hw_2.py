@@ -1,3 +1,6 @@
+# not sure if I am supposed to have a main function....
+
+
 # Import JSON module
 import json
 
@@ -118,5 +121,5 @@ elif sun_vol < planets_vol:
 else:
     print("The planets and sun are of equal volume")
 
-# print(sun_vol)
-# print(planets_vol)
+print(sun_vol)
+print(planets_vol)
