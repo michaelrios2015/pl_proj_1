@@ -33,7 +33,7 @@ class Display:
             print("The combined volume of the planets is equal to volume of the sun")
 
 
-# also works
+# also works, again not really sure if this is how it's supposed to be done
 class Calculate:
     def calc_missing(self, body):
 
@@ -57,7 +57,6 @@ class Calculate:
 
 
 # i used the setattr function from the example you sent me
-# and then slightly modified the logic you gave us in the example
 class Sphere:
     #   so intiating everything as blank or zero
     def __init__(self, my_dict):
@@ -104,6 +103,7 @@ jsonString = '{"Name": "Sol", "Diameter": 1400000, "Planets": [{"Name": "Mecury"
 # Convert JSON String to Python
 solar = json.loads(jsonString)
 
+# so I assume these should be functions ....
 # converting the dictionary into objects
 # -------------------------------------------------------
 sun = Sun(solar)
@@ -111,14 +111,12 @@ sun = Sun(solar)
 # # used to get our place in the planets array
 counter = 0
 
-# print("\tPlanets:\n")
 for planet in solar["Planets"]:
     currentPlanet = Planet(planet)
     sun.Planets.append(currentPlanet)
 
     m_counter = 0
     if "Moons" in planet and len(planet["Moons"]) > 0:
-        print("\t\tMoon(s):")
 
         for moon in planet["Moons"]:
             currentMoon = Moon(moon)
@@ -145,14 +143,17 @@ for planet in sun.Planets:
 # print details
 # -----------------------------------------------
 
+print("Sun:")
 disp_o = Display()
 disp_o.print_details(0, sun)
 
+print("\t---------")
 print("\tPlanets:\n")
 for planet in sun.Planets:
     disp_o.print_details(1, planet)
 
     if planet.Moons:
+        print("\t\t---------")
         print("\t\tMoon(s):")
 
         for moon in planet.Moons:
@@ -160,6 +161,3 @@ for planet in sun.Planets:
 
 
 disp_o.print_volume(sun)
-
-print(sun.Volume)
-print(sun.Planets_Volume)
