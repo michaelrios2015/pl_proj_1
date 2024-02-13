@@ -91,7 +91,7 @@ def print_details(tabs, body):
 
     tabs = "\t" * tabs
 
-    print(tabs + body["Name"])
+    print(tabs + "Name: " + body["Name"])
 
     tabs += "\t"
 
