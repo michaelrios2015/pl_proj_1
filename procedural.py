@@ -131,16 +131,22 @@ def print_results(solar_system):
         print("The combined volume of the planets is equal to volume of the sun")
 
 
-# Opening JSON file
-file = open("JSONPrintyPrint.txt")
+def get_data(input):
 
-# returns JSON object as
-# a dictionary
-solar = json.load(file)
+    # Opening JSON file
+    file = open(input)
 
-# close file
-file.close()
+    # returns JSON object as
+    # a dictionary
+    output = json.load(file)
+
+    # close file
+    file.close()
+    return output
+
 
 # this is my main.. but I don't think python has main functions
+
+solar = get_data("JSONPrintyPrint.txt")
 make_calculations(solar)
 print_results(solar)
