@@ -95,18 +95,19 @@ def print_details(tabs, body):
 
     tabs += "\t"
 
-    print(tabs + "Diameter: " + str(body["Diameter"]))
-    print(tabs + "Circumference: " + str(body["Circumference"]))
+    print(tabs + "Diameter: {:,.1f} km".format(body["Diameter"]))
+    print(tabs + "Circumference: {:,.1f} km".format(body["Circumference"]))
 
     # not sure if this is the best way to check for planets but it works
     if "OrbitalPeriod" in body:
-        print(tabs + "Distance From Sun: " + str(body["DistanceFromSun"]))
-        print(tabs + "Orbital Period: " + str(body["OrbitalPeriod"]))
+        print(tabs + "Distance From Sun: {:,.1f} au".format(body["DistanceFromSun"]))
+        print(tabs + "Orbital Period: {:,.1f} yr".format(body["OrbitalPeriod"]))
 
 
 # goes through the dictionary and prints it nicely
 def print_results(solar_system):
 
+    print("Sun")
     print_details(0, solar_system)
     tabs = "\t"
 
@@ -133,8 +134,9 @@ def print_results(solar_system):
 # would be better if I read this in from another file... but it is OK
 jsonString = '{"Name": "Sol", "Diameter": 1400000, "Planets": [{"Name": "Mecury", "OrbitalPeriod": 0.39, "Circumference": 15329}, {"Name": "Venus", "DistanceFromSun": 0.72, "Diameter": 12104}, {"Name": "Earth", "DistanceFromSun": 1, "OrbitalPeriod": 1, "Diameter": 12756, "Circumference": 40075, "Moons": [{"Name": "Luna", "Diameter": 3474, "Circumference": 10917}]}, {"Name": "Mars", "DistanceFromSun": 1.52, "Circumference": 21344, "Moons": [{"Name": "Phobos", "Diameter": 22.5}, {"Name": "Deimos", "Circumference": 39}]}, {"Name": "Jupiter", "DistanceFromSun": 5.2, "Diameter": 142984, "Moons": [{"Name": "Ganymede", "Diameter": 5268}, {"Name": "Callisto", "Circumference": 4820.6}, {"Name": "Io", "Circumference": 3643.2}]}, {"Name": "Saturn", "DistanceFromSun": 9.54, "Diameter": 120536, "Moons": []}, {"Name": "Uranus", "DistanceFromSun": 19.2, "Diameter": 51118}, {"Name": "Neptune", "DistanceFromSun": 30.06, "Diameter": 49528}]}'
 
-# this is my main.. but I don't think python has main functions
 # Convert JSON String to Python
 solar = json.loads(jsonString)
+
+# this is my main.. but I don't think python has main functions
 make_calculations(solar)
 print_results(solar)

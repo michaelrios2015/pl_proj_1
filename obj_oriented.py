@@ -7,17 +7,18 @@ pi = 3.14
 
 # this works, not sure if it how it is supposed to be done
 class Display:
+
     def print_details(self, tabs, body):
         tabs = "\t" * tabs
         print(tabs + "Name: " + body.Name)
 
         tabs += "\t"
-        print(tabs + "Diameter: " + str(body.Diameter))
-        print(tabs + "Circumference: " + str(body.Circumference))
+        print(tabs + "Diameter: {:,.1f} km".format(body.Diameter))
+        print(tabs + "Circumference: {:,.1f} km".format(body.Circumference))
 
         if hasattr(body, "DistanceFromSun"):
-            print(tabs + "Orbital Period: " + str(body.OrbitalPeriod))
-            print(tabs + "Distance From Sun: " + str(body.DistanceFromSun))
+            print(tabs + "Orbital Period: {:,.1f} yr".format(body.OrbitalPeriod))
+            print(tabs + "Distance From Sun: {:,.1f} au".format(body.DistanceFromSun))
 
     def print_volume(self, body):
 
@@ -35,6 +36,7 @@ class Display:
 
 # also works, again not really sure if this is how it's supposed to be done
 class Calculate:
+
     def calc_missing(self, body):
 
         # checks to see if diamtere is zero and if so calculates it
@@ -48,9 +50,7 @@ class Calculate:
         # calculates volume
         body.Volume = 1.333 * pi * ((body.Diameter / 2) ** 3)
 
-        # if this is true it means we have a planet and should check the oribital period and distance from sun
         if hasattr(body, "DistanceFromSun"):
-            # checking to see if they are zero and then doing the calculations
             if body.OrbitalPeriod == 0:
                 body.OrbitalPeriod = round((body.DistanceFromSun**3) ** 0.5, 2)
 
@@ -62,7 +62,6 @@ class Calculate:
 class Sphere:
     #   so intiating everything as blank or zero
     def __init__(self, my_dict):
-        # essentially starting them blank I guess I could have used None but this seems fine
         self.Name = ""
         self.Diameter = 0
         self.Circumference = 0
@@ -114,17 +113,13 @@ sun = Sun(solar)
 # # used to get our place in the planets array
 counter = 0
 
-# go through planets
 for planet in solar["Planets"]:
     currentPlanet = Planet(planet)
-    # append them to the planets array in sun
     sun.Planets.append(currentPlanet)
 
     m_counter = 0
-    # check for mons
     if "Moons" in planet and len(planet["Moons"]) > 0:
 
-        # if there appened them to the moons array in planets
         for moon in planet["Moons"]:
             currentMoon = Moon(moon)
             sun.Planets[counter].Moons.append(currentMoon)
@@ -135,20 +130,16 @@ for planet in solar["Planets"]:
 
 # calculate missing values
 # ------------------------------------------
-# my calculate object, really just some functions
+
 calc_o = Calculate()
-# check the sun
 calc_o.calc_missing(sun)
 
-# check the planets
 for planet in sun.Planets:
     calc_o.calc_missing(planet)
     sun.Planets_Volume += planet.Volume
 
-    # check the moons
     for moon in planet.Moons:
         calc_o.calc_missing(moon)
-
 
 # print details
 # -----------------------------------------------
@@ -168,6 +159,5 @@ for planet in sun.Planets:
 
         for moon in planet.Moons:
             disp_o.print_details(2, moon)
-
 
 disp_o.print_volume(sun)
